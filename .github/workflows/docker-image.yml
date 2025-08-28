@@ -36,5 +36,5 @@ jobs:
           context: .
           push: true
           file: focal/Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:focal,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:20.04,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest

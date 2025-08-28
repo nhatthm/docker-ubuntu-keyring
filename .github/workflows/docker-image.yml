@@ -1,0 +1,40 @@
+---
+name: Build docker image
+
+concurrency: "docker-image"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - focal/Dockerfile
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 0 * * *'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: nhatthm/ubuntu-keyring
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: nhatthm/gh-actions/checkout@master
+        
+      - name: Build and push
+        uses: nhatthm/gh-actions/docker-build-and-push@master
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          context: .
+          push: true
+          file: focal/Dockerfile.base
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:focal,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:20.04,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest

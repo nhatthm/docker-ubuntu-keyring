@@ -17,7 +17,7 @@ path-exclude /usr/share/linda/*\n\
 APT::Install-Recommends "false";\n\
     ' > /etc/apt/apt.conf.d/99synaptic \
     && apt-get update \
-    && apt-get install -y gnome-keyring build-essential ca-certificates tzdata git curl wget \
+    && apt-get install -y gnome-keyring build-essential ca-certificates tzdata git curl wget gpg \
     # Cleanup
     && apt-get clean \
     && apt-get autoremove \
